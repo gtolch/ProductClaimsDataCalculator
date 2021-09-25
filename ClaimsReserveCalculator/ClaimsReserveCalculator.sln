@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimsReserveCalculator", "ClaimsReserveCalculator\ClaimsReserveCalculator.csproj", "{01C8B387-FCD8-4CE9-B13E-11335408320E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1D80C49-8B28-45B6-ABC0-6F363E0ECE9B}
+	EndGlobalSection
+EndGlobal
