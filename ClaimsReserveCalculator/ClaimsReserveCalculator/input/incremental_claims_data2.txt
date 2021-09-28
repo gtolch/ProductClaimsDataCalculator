@@ -1,0 +1,13 @@
+Incremental Value, Origin Year, Development Year, Product
+110, 1992, 1992, Comp
+170, 1992, 1993, Comp
+200, 1993, 1993, Comp
+45.2, 1990, 1990, Non-Comp
+64.8, 1990, 1991, Non-Comp
+37, 1990, 1993, Non-Comp
+50, 1991, 1991, Non-Comp	
+75, 1991, 1992, Non-Comp
+25, 1991, 1993, Non-Comp
+55, 1992, 1992, Non-Comp
+85, 1992, 1993, Non-Comp
+100, 1993, 1993, Non-Comp

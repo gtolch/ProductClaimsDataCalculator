@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimsReserveCalculator", "ClaimsReserveCalculator\ClaimsReserveCalculator.csproj", "{01C8B387-FCD8-4CE9-B13E-11335408320E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimsReserveTestProject", "ClaimsReserveTestProject\ClaimsReserveTestProject.csproj", "{DA2BFF59-91FB-43BF-A024-5FE1DA514551}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01C8B387-FCD8-4CE9-B13E-11335408320E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA2BFF59-91FB-43BF-A024-5FE1DA514551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA2BFF59-91FB-43BF-A024-5FE1DA514551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA2BFF59-91FB-43BF-A024-5FE1DA514551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA2BFF59-91FB-43BF-A024-5FE1DA514551}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

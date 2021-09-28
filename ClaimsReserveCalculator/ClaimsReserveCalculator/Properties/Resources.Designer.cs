@@ -8,9 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace ClaimsReserveCalculator.Properties
-{
+namespace ClaimsReserveCalculator.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -18,52 +19,143 @@ namespace ClaimsReserveCalculator.Properties
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    public class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClaimsReserveCalculator.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error reading input data file..
+        /// </summary>
+        public static string ClaimsDataFileReadError {
+            get {
+                return ResourceManager.GetString("ClaimsDataFileReadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem occurred in saving claims data..
+        /// </summary>
+        public static string GeneralIssueSavingClaimsData {
+            get {
+                return ResourceManager.GetString("GeneralIssueSavingClaimsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred - invalid input source..
+        /// </summary>
+        public static string InvalidInputSourceError {
+            get {
+                return ResourceManager.GetString("InvalidInputSourceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to development year.
+        /// </summary>
+        public static string LowerCaseDevelopmentYearTitle {
+            get {
+                return ResourceManager.GetString("LowerCaseDevelopmentYearTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to incremental value.
+        /// </summary>
+        public static string LowerCaseIncrementalValueTitle {
+            get {
+                return ResourceManager.GetString("LowerCaseIncrementalValueTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to origin year.
+        /// </summary>
+        public static string LowerCaseOriginYearTitle {
+            get {
+                return ResourceManager.GetString("LowerCaseOriginYearTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to product.
+        /// </summary>
+        public static string LowerCaseProductTitle {
+            get {
+                return ResourceManager.GetString("LowerCaseProductTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error parsing claims input data..
+        /// </summary>
+        public static string ParseClaimsInputDataError {
+            get {
+                return ResourceManager.GetString("ParseClaimsInputDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred - could not save cumulative claims data..
+        /// </summary>
+        public static string SaveCumulativeClaimsDataError {
+            get {
+                return ResourceManager.GetString("SaveCumulativeClaimsDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated cumulative claims data output file.
+        /// </summary>
+        public static string UpdatedClaimsOutputFile {
+            get {
+                return ResourceManager.GetString("UpdatedClaimsOutputFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to write products claims data..
+        /// </summary>
+        public static string WriteProductsClaimsDataException {
+            get {
+                return ResourceManager.GetString("WriteProductsClaimsDataException", resourceCulture);
             }
         }
     }
