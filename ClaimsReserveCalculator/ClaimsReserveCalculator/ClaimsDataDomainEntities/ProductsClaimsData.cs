@@ -17,7 +17,7 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         /// <summary>
         /// Represents the minimum valid year that may be recorded in claims data.
         /// </summary>
-        public const int MINIMUM_VALID_YEAR = 1800;
+        public const int MINIMUM_VALID_YEAR = 1500;
 
         /// <summary>
         /// Allows claim data to be looked up for a particular product name (specified by the key).
