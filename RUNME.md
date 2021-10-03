@@ -20,14 +20,17 @@ The output file format is auto-generated from the input file name and uses the s
 the characters '_out' just before the file extension (e.g. incremental_claims_data1_out.txt). 
 
 There is significant scope for refactoring and extending the classes and tests if more time was available.
-Tests would also be improved and test coverage extended.
+Data parsing and validation could be improved to cope with more edge cases, incomplete data or data with errors in it.  
+Tests would also be improved and test coverage extended. Integration and end-to-end tests should be added.
+Documentation should be improved e.g. methods should document all exceptions that can be thrown. 
+Configurable logging of exception messages should be added, eg using NLog. 
+It is assumed that this would ultimately be added hence why custom error messages are generated to be handled better later.
 The classes representing product claims data, for example could benefit from being refactored and broken up into smaller pieces.
 Also a number of collections and parameters could be abstracted and encapsulated into wrapper classes or structures.
 Also the data item separators (delimiters) could be stored separately from the parsers and the user should be able to select the preferred separator type.
-It would be easy to implement but was not considered a core aspect of the system.
 
 The application handles the parameters arriving in different orders of their category titles,
-assuming they are consistent with the position of the following data item fields. 
+assuming they are consistent with the position of the following data item fields and are separated by commas. 
 It is also assumed that the minimum valid year is 1500 during the data validation process and 
 the parsing may be aborted if an earlier value is seen for a data e.g. for origin year.  
 This was a conscious decision to have a small level of data validation.

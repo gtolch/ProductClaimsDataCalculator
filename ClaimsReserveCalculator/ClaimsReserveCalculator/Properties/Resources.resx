@@ -117,11 +117,80 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotAddMissingDevYear" xml:space="preserve">
+    <value>Cannot add missing development year - parameters are invalid.</value>
+  </data>
+  <data name="CannotGetProductClaimsForOriginYear" xml:space="preserve">
+    <value>Failed to get product claims for origin year - invalid argument values.</value>
+  </data>
+  <data name="CannotParseCategoryTitlesFromNullOrEmptyData" xml:space="preserve">
+    <value>Cannot parse category titles in data parser - input data is null or empty</value>
+  </data>
+  <data name="CannotParseInputAsParamIsNullOrEmpty" xml:space="preserve">
+    <value>Cannot parse input data in data parser - input parameter is null or empty.</value>
+  </data>
+  <data name="CantAccessRawInputDataFile" xml:space="preserve">
+    <value>Can't read raw input data, file isn't valid or user cannot access it.</value>
+  </data>
+  <data name="CantCreateWriterAsSeparatorIsAlphanumeric" xml:space="preserve">
+    <value>Can't create data file writer - item separator is alphanumeric value.</value>
+  </data>
   <data name="ClaimsDataFileReadError" xml:space="preserve">
     <value>Error reading input data file.</value>
   </data>
+  <data name="CouldNotIdentifyCategoryTitles" xml:space="preserve">
+    <value>Cannot identify category titles in input data. Separators may be missing.</value>
+  </data>
+  <data name="DidNotSaveDataDueToInvalidSource" xml:space="preserve">
+    <value>Didn't save cumulative claims data - invalid input source.</value>
+  </data>
+  <data name="DidntGetProductClaimsForOriginYear" xml:space="preserve">
+    <value>Didn't get product claims for origin year, invalid parameter value.</value>
+  </data>
+  <data name="DidntReadFileInputData" xml:space="preserve">
+    <value>Didn't read file input data - input parameter is invalid.</value>
+  </data>
+  <data name="DidntWriteProductClaimsDataToFile" xml:space="preserve">
+    <value>Didn't write product claims data to file - parameters are invalid.</value>
+  </data>
+  <data name="ErrorReadingClaimsDataFile" xml:space="preserve">
+    <value>Error occurred reading from file.</value>
+  </data>
+  <data name="ErrorSavingCumulativeClaimsData" xml:space="preserve">
+    <value>Error in saving cumulative claims data.</value>
+  </data>
+  <data name="ErrorWritingClaimsDataToFile" xml:space="preserve">
+    <value>Error occurred in writing claims data to file.</value>
+  </data>
+  <data name="ExceededWarningLimit" xml:space="preserve">
+    <value>Aborting parse attempt. Exceeded warning limit.</value>
+  </data>
+  <data name="FailedToAddMissingDevYearsData" xml:space="preserve">
+    <value>Failed to add missing development years data - invalid argument values.</value>
+  </data>
+  <data name="FailedToAddMissingOriginYearsData" xml:space="preserve">
+    <value>Failed to add missing origin years data - invalid argument values.</value>
+  </data>
+  <data name="FailedToAddMissingYearsData" xml:space="preserve">
+    <value>Failed to add missing years data - invalid argument values.</value>
+  </data>
+  <data name="FailedToCreateDataCategoryParser" xml:space="preserve">
+    <value>Failed to create data category parser - separator is alphanumeric char</value>
+  </data>
+  <data name="FailedToCreateProductClaimsData" xml:space="preserve">
+    <value>Failed to create product claims data - origin year parameter is invalid.</value>
+  </data>
+  <data name="FailedToCreateProductClaimsParser" xml:space="preserve">
+    <value>Failed to create product claims data parser - invalid null parameter(s).</value>
+  </data>
   <data name="GeneralIssueSavingClaimsData" xml:space="preserve">
     <value>Problem occurred in saving claims data.</value>
+  </data>
+  <data name="IncrementalClaimsDataInvalidParameter" xml:space="preserve">
+    <value>Failed to parse incremental claims data - invalid parameter.</value>
+  </data>
+  <data name="InvalidClaimsDataCategoriesError" xml:space="preserve">
+    <value>Didn't identify claims data categories - titles may be missing separators.</value>
   </data>
   <data name="InvalidInputSourceError" xml:space="preserve">
     <value>Error occurred - invalid input source.</value>
@@ -144,10 +213,13 @@
   <data name="SaveCumulativeClaimsDataError" xml:space="preserve">
     <value>Error occurred - could not save cumulative claims data.</value>
   </data>
+  <data name="SeparatorIsAlphanumericValue" xml:space="preserve">
+    <value>Failed to create incremental claims parser - separator is alphanumeric value.</value>
+  </data>
   <data name="UpdatedClaimsOutputFile" xml:space="preserve">
     <value>Updated cumulative claims data output file</value>
   </data>
-  <data name="WriteProductsClaimsDataException" xml:space="preserve">
+  <data name="WriteProductsClaimsDataError" xml:space="preserve">
     <value>Failed to write products claims data.</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
+using ClaimsReserveCalculator.CustomExceptions;
 using ClaimsReserveCalculator.Properties;
 using System;
 
@@ -22,8 +23,7 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
         {
             if (char.IsLetterOrDigit(dataItemSeparator))
             {
-                throw new ArgumentException(
-                    "Failed to create data category parser - separator is alphanumeric char");
+                throw new ArgumentException(Resources.FailedToCreateDataCategoryParser);
             }
 
             _dataItemSeparator = dataItemSeparator;
@@ -37,33 +37,37 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
             if (string.IsNullOrEmpty(inputData))
             {
                 throw new ArgumentException(
-                    "Cannot parse category titles in data parser - input data is null or empty");
+                    Resources.CannotParseCategoryTitlesFromNullOrEmptyData);
             }
 
             ClaimsDataCategoryInfo claimsDataCategoryInfo = new ClaimsDataCategoryInfo();
             string[] titleItems = inputData.Split(_dataItemSeparator);
 
-            if (titleItems != null)
+            // Check if something at least has been parsed.
+            // The above Split method will return the original input data if separators aren't found
+            if (titleItems == null || titleItems.Length <= 1)
             {
-                for (int index = 0; index < titleItems.Length; index++)
-                {
-                    claimsDataCategoryInfo = SetupDataCategoryPositionInfo(
-                        titleItems[index], index, claimsDataCategoryInfo);
-                }
+                throw new InvalidClaimsDataCategoriesException(Resources.CouldNotIdentifyCategoryTitles);
+            }
+
+            for (int index = 0; index < titleItems.Length; index++)
+            {
+                claimsDataCategoryInfo = ExtractDataCategoryPositionInfo(
+                    titleItems[index], index, claimsDataCategoryInfo);
             }
 
             return claimsDataCategoryInfo;
         }
 
         /// <summary>
-        /// Tries to match the data category title item to known values and store the 
-        /// position index of the data category, to cater for different orders of category titles.
+        /// Attempts to match the data category title item to known values and stores the 
+        /// position index of each data category, to cater for different orders of data categories in input data.
         /// </summary>
         /// <param name="inputDataItem">The input data item to try to match.</param>
         /// <param name="inputDataItemIndex">The index of the data item.</param>
-        /// <param name="claimsDataCategoryInfo">The claims data category info.</param>
+        /// <param name="claimsDataCategoryInfo">The claims data category info to populate.</param>
         /// <returns>The claims data category info that may have been updated.</returns>
-        private ClaimsDataCategoryInfo SetupDataCategoryPositionInfo(string inputDataItem, int inputDataItemIndex, 
+        private ClaimsDataCategoryInfo ExtractDataCategoryPositionInfo(string inputDataItem, int inputDataItemIndex, 
             ClaimsDataCategoryInfo claimsDataCategoryInfo)
         {
             // Do case insensitive string comparison and set the item index if we get a match.

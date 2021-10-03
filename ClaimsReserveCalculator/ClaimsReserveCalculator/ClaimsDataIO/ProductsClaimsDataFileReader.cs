@@ -1,5 +1,6 @@
 ﻿using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
 using ClaimsReserveCalculator.CustomExceptions;
+using ClaimsReserveCalculator.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,13 +30,12 @@ namespace ClaimsReserveCalculator.ClaimsDataIO
             string[] rawInputData = null;
             if (string.IsNullOrWhiteSpace(inputSource))
             {
-                throw new ArgumentException("Didn't read file input data - input parameter is invalid");
+                throw new ArgumentException(Resources.DidntReadFileInputData);
             }
 
             if (!IsInputSourceValid(inputSource))
             {
-                throw new InvalidInputSourceFileException(
-                    $"Can't read raw input data, file {inputSource} isn't valid or user cannot access it.");
+                throw new InvalidInputSourceFileException(Resources.CantAccessRawInputDataFile);
             }
 
             try
@@ -44,8 +44,7 @@ namespace ClaimsReserveCalculator.ClaimsDataIO
             }
             catch (Exception ex)
             {
-                throw new ClaimsDataFileReadException(
-                    $"Error occurred reading from file {inputSource}: {ex}", ex);
+                throw new ClaimsDataFileReadException(Resources.ErrorReadingClaimsDataFile, ex);
             }
 
             return rawInputData;

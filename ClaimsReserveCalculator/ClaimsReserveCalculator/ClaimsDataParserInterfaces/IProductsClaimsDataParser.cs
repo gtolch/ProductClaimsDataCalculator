@@ -1,5 +1,4 @@
-﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ClaimsReserveCalculator.ClaimsDataParserInterfaces
 {
@@ -10,10 +9,10 @@ namespace ClaimsReserveCalculator.ClaimsDataParserInterfaces
     public interface IProductsClaimsDataParser
     {
         /// <summary>
-        /// Parses raw input lines of data for products claims.
+        /// Converts raw input data into a collection of parsed product claims data.
         /// </summary>
-        /// <param name="inputDataLines">raw input data lines containing claims data.</param>
-        /// <returns>Returns the parsed product claims data.</returns>
-        ProductsClaimsData ParseProductsClaimsInputData(IEnumerable<string> inputDataLines);
+        /// <param name="inputDataLines">the raw input data lines to be parsed.</param>
+        /// <returns>the product claims data parsed from the input data.</returns>
+        IEnumerable<ParsedProductClaimsData> ParseProductsClaimsData(IEnumerable<string> inputDataLines);
     }
 }

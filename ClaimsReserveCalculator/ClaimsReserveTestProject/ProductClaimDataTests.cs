@@ -41,25 +41,28 @@ namespace ClaimsReserveTestProject
             Assert.Equal(devYearClaimsData, devYearsData.First());
         }
 
-        [Fact]
-        public void CalculateCumulativeClaimsValue_DevYearClaimsData_UpdatesDevYearClaimsData()
+        [Theory]
+        [InlineData(1980, 1981, 1.2, 0.5, 1983, 2.2, 1.5)]
+        [InlineData(2000, 2001, 0.3, 0, 2005, 3.5, 0)]
+        [InlineData(2001, 2001, 1.2, 0.5, 2007, 2.2, 1.5)]
+        [InlineData(2001, 2010, 1.2, 0.5, 2003, 3.7, 0)]
+        public void CalculateCumulativeClaimsValue_DevYearClaimsDataValues_UpdatesCalculatedCumulativeValueInDevYearClaimsData(
+            int originYear, int developmentYear1, double incrementalValue1, double cumulativeValue1, 
+            int developmentYear2, double incrementalValue2, double cumulativeValue2)
         {
-            int originYear = 2000;
-            int developmentYear = 2001;
-            double incrementalValue = 1.2;
-            double cumulativeValue = 0.5;
             DevelopmentYearClaimsData devYearClaimsData1 = new DevelopmentYearClaimsData(
-                developmentYear, incrementalValue, cumulativeValue);
+                developmentYear1, incrementalValue1, cumulativeValue1);
             DevelopmentYearClaimsData devYearClaimsData2 = new DevelopmentYearClaimsData(
-                developmentYear + 1, incrementalValue + 1, cumulativeValue + 1);
+                developmentYear2, incrementalValue2, cumulativeValue2);
             ProductClaimsData productClaimsData = new ProductClaimsData(originYear);
 
             productClaimsData.UpdateDevelopmentYearClaimsData(devYearClaimsData1);
             productClaimsData.UpdateDevelopmentYearClaimsData(devYearClaimsData2);
-            double latestCumulativeValue = productClaimsData.CalculateCumulativeClaimsValue();
+            double calculatedCumulativeValue = productClaimsData.CalculateCumulativeClaimsValue();
 
             int precision = 2;
-            Assert.Equal(3.4, latestCumulativeValue, precision); // 3.4 == 1.2 + 2.2
+            double expectedCumulativeValue = incrementalValue1 + incrementalValue2; 
+            Assert.Equal(expectedCumulativeValue, calculatedCumulativeValue, precision);
         }
     }
 }

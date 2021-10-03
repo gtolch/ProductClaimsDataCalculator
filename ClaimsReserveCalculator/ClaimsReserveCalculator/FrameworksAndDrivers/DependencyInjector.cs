@@ -1,8 +1,11 @@
-﻿using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
+﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
+using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
 using ClaimsReserveCalculator.ClaimsDataIO;
+using ClaimsReserveCalculator.ClaimsDataProcessing;
 using ClaimsReserveCalculator.FrameworksAndDriversInterfaces;
 using System;
 using Unity;
+using Unity.Lifetime;
 using Unity.RegistrationByConvention;
 
 namespace ClaimsReserveCalculator.FrameworksAndDrivers
@@ -46,6 +49,9 @@ namespace ClaimsReserveCalculator.FrameworksAndDrivers
             // Register those types that can't be found/matched by their naming convention.
             _container.RegisterType<IProductsClaimsDataReader, ProductsClaimsDataFileReader>();
             _container.RegisterType<IProductsClaimsDataWriter, ProductsClaimsDataFileWriter>();
+
+            // Register those types for which single instances should be used.
+            _container.RegisterType<IClaimsDataManager, ClaimsDataManager>(new ContainerControlledLifetimeManager());
 
             // Find and register all other types through (naming) convention.
             _container.RegisterTypes(AllClasses.FromLoadedAssemblies(), 

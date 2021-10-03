@@ -1,6 +1,6 @@
-﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
-using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
+﻿using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
 using ClaimsReserveCalculator.CustomExceptions;
+using ClaimsReserveCalculator.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,118 +37,109 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
         {
             if (char.IsLetterOrDigit(dataItemSeparator))
             {
-                throw new ArgumentException(
-                    "Failed to create incremental claims parser - separator is alphanumeric char");
+                throw new ArgumentException(Resources.SeparatorIsAlphanumericValue);
             }
 
             _dataItemSeparator = dataItemSeparator;
         }
 
         /// <summary>
-        /// Parses the incremental claims data and updates the products claims data.
+        /// Parses the incremental claims data and returns the parsed products claims data.
         /// </summary>
         /// <param name="dataLinesToParse">The data line entries to be parsed.</param>
         /// <param name="productsClaimsData">The products claims data.</param>
         /// <param name="claimsDataCategoryInfo">Contains category and index info.</param>
-        /// <returns>The products claims data which may have been updated.</returns>
-        public ProductsClaimsData ParseIncrementalClaimsData(IEnumerable<string> dataLinesToParse,
-            ProductsClaimsData productsClaimsData, ClaimsDataCategoryInfo claimsDataCategoryInfo)
+        /// <returns>The parsed products claims data.</returns>
+        public IEnumerable<ParsedProductClaimsData> /*ProductsClaimsData*/ ParseIncrementalClaimsData(IEnumerable<string> dataLinesToParse,
+            /*ProductsClaimsData productsClaimsData,*/ ClaimsDataCategoryInfo claimsDataCategoryInfo)
         {
-            if (dataLinesToParse == null || productsClaimsData == null || (!dataLinesToParse.Any()))
+            if (dataLinesToParse == null || /*productsClaimsData == null ||*/ (!dataLinesToParse.Any()))
             {
-                throw new ArgumentException(
-                    "Failed to parse incremental claims data - invalid parameter");
+                throw new ArgumentException(Resources.IncrementalClaimsDataInvalidParameter);
             }
 
             WarningCount = 0;
-
-            ProductClaimsData claimsDataForProduct = null;
+            List<ParsedProductClaimsData> parsedProductsData = new List<ParsedProductClaimsData>();
+            ParsedProductClaimsData parsedProductDataEntry = null; ;
 
             foreach (var dataLine in dataLinesToParse)
             {
-                WarningCount = 0;
+                parsedProductDataEntry = ParseInputDataLine(dataLine, /*productsClaimsData,*/ claimsDataCategoryInfo);
 
-                string[] dataItems = dataLine.Split(_dataItemSeparator);
-
-                if (dataItems != null && dataItems.Any())
+                if (parsedProductDataEntry != null)
                 {
-                    string productName = string.Empty;
-                    if (claimsDataCategoryInfo.ProductIndex < dataItems.Length)
-                    {
-                        productName = dataItems[claimsDataCategoryInfo.ProductIndex].Trim();
-                    }
-                    else
-                    {
-                        WarningCount++;
-                    }
-
-                    int originYear = 0;
-                    if ((claimsDataCategoryInfo.OriginYearIndex >= dataItems.Length) ||
-                        (!int.TryParse(dataItems[claimsDataCategoryInfo.OriginYearIndex], out originYear)))
-                    {
-                        WarningCount++;
-                    }
-
-                    int developmentYear = 0;
-                    if ((claimsDataCategoryInfo.DevelopmentYearIndex >= dataItems.Length) ||
-                        (!int.TryParse(
-                            dataItems[claimsDataCategoryInfo.DevelopmentYearIndex], out developmentYear)))
-                    {
-                        WarningCount++;
-                    }
-
-                    double incrementalValue = 0;
-                    if ((claimsDataCategoryInfo.IncrementalValueIndex >= dataItems.Length) ||
-                        (!double.TryParse(
-                            dataItems[claimsDataCategoryInfo.IncrementalValueIndex], out incrementalValue)))
-                    {
-                        WarningCount++;
-                    }
-
-                    if (WarningCount <= MAX_PARSE_WARNINGS_TOLERANCE)
-                    {
-                        claimsDataForProduct = SetupProductClaimsData(
-                            productName, originYear, developmentYear, incrementalValue, productsClaimsData);
-                    }
-                    else
-                    {
-                        throw new ParseClaimsInputDataException("Aborting parse attempt. Exceeded warning limit");
-                    }
+                    parsedProductsData.Add(parsedProductDataEntry);
                 }
-
             }
 
-            return productsClaimsData;
+            //return productsClaimsData;
+            return parsedProductsData;
         }
 
         /// <summary>
-        /// Setup and register product claims data using the supplied parameters.
+        /// Parses an input date line of incremental claims data and updates the products claims data.
         /// </summary>
-        /// <param name="productName">The name of the product.</param>
-        /// <param name="originYear">The origin year for the claims data.</param>
-        /// <param name="developmentYear">The development year for the claims data</param>
-        /// <param name="incrementalValue">The incremental value for the claims data</param>
-        /// <returns></returns>
-        private ProductClaimsData SetupProductClaimsData(
-            string productName, int originYear, int developmentYear, double incrementalValue, ProductsClaimsData _productsClaimsData)
+        /// <param name="dataLineToParse">The data line entries to be parsed.</param>
+        /// <param name="productsClaimsData">The products claims data.</param>
+        /// <param name="claimsDataCategoryInfo">Contains category and index info.</param>
+        /// <returns>The products claims data which may have been updated.</returns>
+        public ParsedProductClaimsData ParseInputDataLine(string dataLineToParse, 
+            /*ProductsClaimsData productsClaimsData,*/ ClaimsDataCategoryInfo claimsDataCategoryInfo)
         {
-            // Retrieve any existing product claims data for the current origin year
-            ProductClaimsData productClaimsData =
-                _productsClaimsData.GetProductClaimsForOriginYear(productName, originYear);
+            WarningCount = 0;
 
-            if (productClaimsData == null)
+            string[] dataItems = dataLineToParse.Split(_dataItemSeparator);
+            ParsedProductClaimsData productDataEntry = null;
+
+            if (dataItems != null && dataItems.Any())
             {
-                productClaimsData = new ProductClaimsData(originYear);
+                string productName = string.Empty;
+                if (claimsDataCategoryInfo.ProductIndex < dataItems.Length)
+                {
+                    productName = dataItems[claimsDataCategoryInfo.ProductIndex].Trim();
+                }
+                else
+                {
+                    WarningCount++;
+                }
+
+                int originYear = 0;
+                if ((claimsDataCategoryInfo.OriginYearIndex >= dataItems.Length) ||
+                    (!int.TryParse(dataItems[claimsDataCategoryInfo.OriginYearIndex], out originYear)))
+                {
+                    WarningCount++;
+                }
+
+                int developmentYear = 0;
+                if ((claimsDataCategoryInfo.DevelopmentYearIndex >= dataItems.Length) ||
+                    (!int.TryParse(
+                        dataItems[claimsDataCategoryInfo.DevelopmentYearIndex], out developmentYear)))
+                {
+                    WarningCount++;
+                }
+
+                double incrementalValue = 0;
+                if ((claimsDataCategoryInfo.IncrementalValueIndex >= dataItems.Length) ||
+                    (!double.TryParse(
+                        dataItems[claimsDataCategoryInfo.IncrementalValueIndex], out incrementalValue)))
+                {
+                    WarningCount++;
+                }
+
+                if (WarningCount <= MAX_PARSE_WARNINGS_TOLERANCE)
+                {
+                    productDataEntry = new ParsedProductClaimsData(productName, originYear, developmentYear, incrementalValue, WarningCount);
+
+                    /*SetupProductClaimsData(
+                        productName, originYear, developmentYear, incrementalValue, productsClaimsData);*/
+                }
+                else
+                {
+                    throw new ParseClaimsInputDataException(Resources.ExceededWarningLimit);
+                }
             }
 
-            double cumulativeValue = incrementalValue + productClaimsData.CalculateCumulativeClaimsValue();
-            DevelopmentYearClaimsData devYearClaimsData = new DevelopmentYearClaimsData(
-                developmentYear, incrementalValue, cumulativeValue);
-
-            productClaimsData.UpdateDevelopmentYearClaimsData(devYearClaimsData);
-            _productsClaimsData.UpdateProductClaimsData(productName, productClaimsData);
-
-            return productClaimsData;
+            return productDataEntry;
         }
     }
 }

@@ -157,13 +157,17 @@ namespace ClaimsReserveCalculator.FrameworksAndDrivers.DataParserUserInterface
             {
                 StatusText = Resources.ClaimsDataFileReadError;
             }
+            catch (InvalidClaimsDataCategoriesException)
+            {
+                StatusText = Resources.InvalidClaimsDataCategoriesError;
+            }
             catch (ParseClaimsInputDataException)
             {
                 StatusText = Resources.ParseClaimsInputDataError;
             }
             catch (WriteProductsClaimsDataException)
             {
-                StatusText = Resources.WriteProductsClaimsDataException;
+                StatusText = Resources.WriteProductsClaimsDataError;
             }
             catch (Exception)
             {

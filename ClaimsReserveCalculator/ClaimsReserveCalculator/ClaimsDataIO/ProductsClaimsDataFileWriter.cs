@@ -1,6 +1,7 @@
-﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
-using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
+﻿using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
+using ClaimsReserveCalculator.ClaimsDataProcessing;
 using ClaimsReserveCalculator.CustomExceptions;
+using ClaimsReserveCalculator.Properties;
 using System;
 using System.IO;
 
@@ -12,53 +13,55 @@ namespace ClaimsReserveCalculator.ClaimsDataIO
     /// </summary>
     public class ProductsClaimsDataFileWriter : IProductsClaimsDataWriter
     {
+        private readonly IClaimsDataManager _claimsDataManager;
         private readonly string _separatorWithExtraSpace;
 
         /// <summary>
         /// Constructor which sets up the writer and the data field separator.
         /// </summary>
+        /// <param name="claimsManager">The processor/manager of claims data</param>
         /// <param name="outputItemSeparator">The delimiter used to separate data values.</param>
-        public ProductsClaimsDataFileWriter(char outputItemSeparator = ',')
+        public ProductsClaimsDataFileWriter(IClaimsDataManager claimsManager, char outputItemSeparator = ',')
         {
             if (char.IsLetterOrDigit(outputItemSeparator))
             {
                 throw new ArgumentException(
-                    "Can't create data file writer - item separator is alphanumeric value.");
+                    Resources.CantCreateWriterAsSeparatorIsAlphanumeric);
             }
 
+            _claimsDataManager = claimsManager;
             _separatorWithExtraSpace = $"{outputItemSeparator} ";
         }
 
         /// <summary>
-        /// Saves the supplied claims data for a group of products.
+        /// Saves the claims data for a group of products.
         /// Any existing destination resource (with the same name) should be overwritten.
         /// </summary>
-        /// <param name="productsClaimsData">The claims data for a collection of products.</param>
         /// <param name="outputDestination">Fully qualified filename with path / URL.</param>
-        public void WriteProductClaimsOutputData(ProductsClaimsData productsClaimsData, string outputDestination)
+        /// <param name="totalDevelopmentYears">Total development years in the claims data.</param>
+        public void WriteProductClaimsOutputData(string outputDestination, int totalDevelopmentYears)
         {
-            if (productsClaimsData == null || string.IsNullOrWhiteSpace(outputDestination))
+            if (string.IsNullOrWhiteSpace(outputDestination))
             {
-                throw new ArgumentException("Didn't write product claims data - parameters are invalid");
+                throw new ArgumentException(Resources.DidntWriteProductClaimsDataToFile);
             }
 
             try
             {
-                int originYear = productsClaimsData.EarliestOriginYear;
-
                 using (StreamWriter streamWriter = new StreamWriter(outputDestination))
                 {
-                    streamWriter.Write(originYear);
+                    streamWriter.Write(_claimsDataManager.EarliestOriginYear);
                     streamWriter.Write(_separatorWithExtraSpace);
-                    streamWriter.Write(productsClaimsData.TotalDevelopmentYears);
+                    streamWriter.Write(totalDevelopmentYears);
                     streamWriter.Write(Environment.NewLine);
 
                     // Output cumulative claims data to file for each of the products.
-                    foreach (var productName in productsClaimsData.ProductNames)
+                    foreach (var productName in _claimsDataManager.ProductNames)
                     {
                         streamWriter.Write(productName);
 
-                        foreach (var claimsData in productsClaimsData.GetAllDevelopmentYearsClaimsData(productName))
+                        foreach (var claimsData in 
+                            _claimsDataManager.GetAllDevelopmentYearsClaimsData(productName))
                         {
                             streamWriter.Write(_separatorWithExtraSpace);
                             streamWriter.Write(claimsData.CumulativeValue);
@@ -70,8 +73,7 @@ namespace ClaimsReserveCalculator.ClaimsDataIO
             }
             catch (Exception ex)
             {
-                throw new WriteProductsClaimsDataException(
-                    $"Error occurred in writing claims data to file {outputDestination}: {ex}", ex);
+                throw new WriteProductsClaimsDataException(Resources.ErrorWritingClaimsDataToFile, ex);
             }
         }
     }

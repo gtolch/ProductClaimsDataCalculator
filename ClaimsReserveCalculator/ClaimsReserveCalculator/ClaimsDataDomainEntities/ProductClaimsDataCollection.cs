@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClaimsReserveCalculator.Properties;
+using System;
 using System.Collections.Generic;
 
 namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
@@ -8,8 +9,6 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
     /// </summary>
     public class ProductClaimsDataCollection
     {
-        public const int MINIMUM_VALID_YEAR_VALUE = 1800;
-
         /// <summary>
         /// Claims data sorted in order of origin year. 
         /// </summary>
@@ -35,7 +34,11 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         public ProductClaimsDataCollection(ProductClaimsData productClaimsData)
         {
             _claimsDataSortedByOriginYear = new SortedList<int, ProductClaimsData>();
-            _claimsDataSortedByOriginYear.Add(productClaimsData.OriginYear, productClaimsData);
+
+            if (productClaimsData != null)
+            {
+                _claimsDataSortedByOriginYear.Add(productClaimsData.OriginYear, productClaimsData);
+            }
         }
 
         /// <summary>
@@ -56,16 +59,15 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         }
 
         /// <summary>
-        /// Get the first claims data associated with the specified origin year parameter.
+        /// Gets the first claims data associated with a specified origin year.
         /// </summary>
         /// <param name="originYear">The origin year for which claims data is wanted.</param>
-        /// <returns></returns>
+        /// <returns>Returns the product claims data associated with an origin year.</returns>
         public ProductClaimsData GetProductClaimsForOriginYear(int originYear)
         {
-            if (originYear < MINIMUM_VALID_YEAR_VALUE)
+            if (!ClaimsDataValidator.IsClaimsYearValid(originYear))
             {
-                throw new ArgumentException(
-                    $"Didn't get product claims for origin year, invalid parameter value: {originYear}");
+                throw new ArgumentException(Resources.DidntGetProductClaimsForOriginYear);
             }
 
             ProductClaimsData productClaimsData = null;
@@ -79,21 +81,60 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         }
 
         /// <summary>
+        /// Adds entries for any missing years to the claims data. Placeholder product claims data 
+        /// entries will be added for any years inferred to be missing from the recorded data.
+        /// </summary>
+        /// <param name="earliestOriginYear">The lowest origin year to consider.</param>
+        /// <param name="maxDevelopmentYear">The highest origin year to consider.</param>
+        public void AddMissingYearsData(int earliestOriginYear, int maxDevelopmentYear)
+        {
+            if (!ClaimsDataValidator.AreClaimsYearsValid(earliestOriginYear, maxDevelopmentYear))
+            {
+                throw new ArgumentException(Resources.FailedToAddMissingYearsData);
+            }
+
+            AddMissingOriginYearsData(earliestOriginYear, maxDevelopmentYear);
+            AddMissingDevelopmentYearsData(earliestOriginYear, maxDevelopmentYear);
+        }
+
+        /// <summary>
         /// Adds any missing claims data entries for development years within a range.
         /// </summary>
         /// <param name="startYear">The minimum year for claims data.</param>
         /// <param name="endYear">The maximum year for claims data.</param>
-        public void AddMissingDevelopmentYearsData(int startYear, int endYear)
+        private void AddMissingDevelopmentYearsData(int startYear, int endYear)
         {
-            if (startYear < MINIMUM_VALID_YEAR_VALUE || endYear < MINIMUM_VALID_YEAR_VALUE)
+            if (!ClaimsDataValidator.AreClaimsYearsValid(startYear, endYear))
             {
-                throw new ArgumentException(
-                    "Failed to add missing development years data - invalid argument values");
+                throw new ArgumentException(Resources.FailedToAddMissingDevYearsData);
             }
 
             foreach (var productClaimsData in _claimsDataSortedByOriginYear.Values)
             {
                 productClaimsData.AddMissingDevelopmentYearsData(startYear, endYear);
+            }
+        }
+
+        /// <summary>
+        /// Adds any missing origin years to the claims data. Placeholder product claims data 
+        /// entries will be added for origin years inferred to be missing from the recorded data.
+        /// </summary>
+        /// <param name="earliestOriginYear">the earliest origin year of claims data.</param>
+        /// <param name="maxDevelopmentYear">The maximum development year of claims data.</param>
+        private void AddMissingOriginYearsData(int earliestOriginYear, int maxDevelopmentYear)
+        {
+            if (!ClaimsDataValidator.AreClaimsYearsValid(earliestOriginYear, maxDevelopmentYear))
+            {
+                throw new ArgumentException(Resources.FailedToAddMissingOriginYearsData);
+            }
+
+            for (int originYear = earliestOriginYear; originYear <= maxDevelopmentYear; originYear++)
+            {
+                if (GetProductClaimsForOriginYear(originYear) == null)
+                {
+                    ProductClaimsData claimsData = new ProductClaimsData(originYear);
+                    Add(claimsData);
+                }
             }
         }
     }

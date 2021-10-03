@@ -22,7 +22,7 @@ namespace ClaimsReserveCalculator.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ClaimsReserveCalculator.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClaimsReserveCalculator.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ClaimsReserveCalculator.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,27 +61,234 @@ namespace ClaimsReserveCalculator.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot add missing development year - parameters are invalid..
+        /// </summary>
+        internal static string CannotAddMissingDevYear {
+            get {
+                return ResourceManager.GetString("CannotAddMissingDevYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get product claims for origin year - invalid argument values..
+        /// </summary>
+        internal static string CannotGetProductClaimsForOriginYear {
+            get {
+                return ResourceManager.GetString("CannotGetProductClaimsForOriginYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot parse category titles in data parser - input data is null or empty.
+        /// </summary>
+        internal static string CannotParseCategoryTitlesFromNullOrEmptyData {
+            get {
+                return ResourceManager.GetString("CannotParseCategoryTitlesFromNullOrEmptyData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot parse input data in data parser - input parameter is null or empty..
+        /// </summary>
+        internal static string CannotParseInputAsParamIsNullOrEmpty {
+            get {
+                return ResourceManager.GetString("CannotParseInputAsParamIsNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t read raw input data, file isn&apos;t valid or user cannot access it..
+        /// </summary>
+        internal static string CantAccessRawInputDataFile {
+            get {
+                return ResourceManager.GetString("CantAccessRawInputDataFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t create data file writer - item separator is alphanumeric value..
+        /// </summary>
+        internal static string CantCreateWriterAsSeparatorIsAlphanumeric {
+            get {
+                return ResourceManager.GetString("CantCreateWriterAsSeparatorIsAlphanumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error reading input data file..
         /// </summary>
-        public static string ClaimsDataFileReadError {
+        internal static string ClaimsDataFileReadError {
             get {
                 return ResourceManager.GetString("ClaimsDataFileReadError", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot identify category titles in input data. Separators may be missing..
+        /// </summary>
+        internal static string CouldNotIdentifyCategoryTitles {
+            get {
+                return ResourceManager.GetString("CouldNotIdentifyCategoryTitles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Didn&apos;t save cumulative claims data - invalid input source..
+        /// </summary>
+        internal static string DidNotSaveDataDueToInvalidSource {
+            get {
+                return ResourceManager.GetString("DidNotSaveDataDueToInvalidSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Didn&apos;t get product claims for origin year, invalid parameter value..
+        /// </summary>
+        internal static string DidntGetProductClaimsForOriginYear {
+            get {
+                return ResourceManager.GetString("DidntGetProductClaimsForOriginYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Didn&apos;t read file input data - input parameter is invalid..
+        /// </summary>
+        internal static string DidntReadFileInputData {
+            get {
+                return ResourceManager.GetString("DidntReadFileInputData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Didn&apos;t write product claims data to file - parameters are invalid..
+        /// </summary>
+        internal static string DidntWriteProductClaimsDataToFile {
+            get {
+                return ResourceManager.GetString("DidntWriteProductClaimsDataToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred reading from file..
+        /// </summary>
+        internal static string ErrorReadingClaimsDataFile {
+            get {
+                return ResourceManager.GetString("ErrorReadingClaimsDataFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in saving cumulative claims data..
+        /// </summary>
+        internal static string ErrorSavingCumulativeClaimsData {
+            get {
+                return ResourceManager.GetString("ErrorSavingCumulativeClaimsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred in writing claims data to file..
+        /// </summary>
+        internal static string ErrorWritingClaimsDataToFile {
+            get {
+                return ResourceManager.GetString("ErrorWritingClaimsDataToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aborting parse attempt. Exceeded warning limit..
+        /// </summary>
+        internal static string ExceededWarningLimit {
+            get {
+                return ResourceManager.GetString("ExceededWarningLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to add missing development years data - invalid argument values..
+        /// </summary>
+        internal static string FailedToAddMissingDevYearsData {
+            get {
+                return ResourceManager.GetString("FailedToAddMissingDevYearsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to add missing origin years data - invalid argument values..
+        /// </summary>
+        internal static string FailedToAddMissingOriginYearsData {
+            get {
+                return ResourceManager.GetString("FailedToAddMissingOriginYearsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to add missing years data - invalid argument values..
+        /// </summary>
+        internal static string FailedToAddMissingYearsData {
+            get {
+                return ResourceManager.GetString("FailedToAddMissingYearsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create data category parser - separator is alphanumeric char.
+        /// </summary>
+        internal static string FailedToCreateDataCategoryParser {
+            get {
+                return ResourceManager.GetString("FailedToCreateDataCategoryParser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create product claims data - origin year parameter is invalid..
+        /// </summary>
+        internal static string FailedToCreateProductClaimsData {
+            get {
+                return ResourceManager.GetString("FailedToCreateProductClaimsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create product claims data parser - invalid null parameter(s)..
+        /// </summary>
+        internal static string FailedToCreateProductClaimsParser {
+            get {
+                return ResourceManager.GetString("FailedToCreateProductClaimsParser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Problem occurred in saving claims data..
         /// </summary>
-        public static string GeneralIssueSavingClaimsData {
+        internal static string GeneralIssueSavingClaimsData {
             get {
                 return ResourceManager.GetString("GeneralIssueSavingClaimsData", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to parse incremental claims data - invalid parameter..
+        /// </summary>
+        internal static string IncrementalClaimsDataInvalidParameter {
+            get {
+                return ResourceManager.GetString("IncrementalClaimsDataInvalidParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Didn&apos;t identify claims data categories - titles may be missing separators..
+        /// </summary>
+        internal static string InvalidClaimsDataCategoriesError {
+            get {
+                return ResourceManager.GetString("InvalidClaimsDataCategoriesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error occurred - invalid input source..
         /// </summary>
-        public static string InvalidInputSourceError {
+        internal static string InvalidInputSourceError {
             get {
                 return ResourceManager.GetString("InvalidInputSourceError", resourceCulture);
             }
@@ -90,7 +297,7 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to development year.
         /// </summary>
-        public static string LowerCaseDevelopmentYearTitle {
+        internal static string LowerCaseDevelopmentYearTitle {
             get {
                 return ResourceManager.GetString("LowerCaseDevelopmentYearTitle", resourceCulture);
             }
@@ -99,7 +306,7 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to incremental value.
         /// </summary>
-        public static string LowerCaseIncrementalValueTitle {
+        internal static string LowerCaseIncrementalValueTitle {
             get {
                 return ResourceManager.GetString("LowerCaseIncrementalValueTitle", resourceCulture);
             }
@@ -108,7 +315,7 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to origin year.
         /// </summary>
-        public static string LowerCaseOriginYearTitle {
+        internal static string LowerCaseOriginYearTitle {
             get {
                 return ResourceManager.GetString("LowerCaseOriginYearTitle", resourceCulture);
             }
@@ -117,7 +324,7 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to product.
         /// </summary>
-        public static string LowerCaseProductTitle {
+        internal static string LowerCaseProductTitle {
             get {
                 return ResourceManager.GetString("LowerCaseProductTitle", resourceCulture);
             }
@@ -126,7 +333,7 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error parsing claims input data..
         /// </summary>
-        public static string ParseClaimsInputDataError {
+        internal static string ParseClaimsInputDataError {
             get {
                 return ResourceManager.GetString("ParseClaimsInputDataError", resourceCulture);
             }
@@ -135,16 +342,25 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error occurred - could not save cumulative claims data..
         /// </summary>
-        public static string SaveCumulativeClaimsDataError {
+        internal static string SaveCumulativeClaimsDataError {
             get {
                 return ResourceManager.GetString("SaveCumulativeClaimsDataError", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to create incremental claims parser - separator is alphanumeric value..
+        /// </summary>
+        internal static string SeparatorIsAlphanumericValue {
+            get {
+                return ResourceManager.GetString("SeparatorIsAlphanumericValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated cumulative claims data output file.
         /// </summary>
-        public static string UpdatedClaimsOutputFile {
+        internal static string UpdatedClaimsOutputFile {
             get {
                 return ResourceManager.GetString("UpdatedClaimsOutputFile", resourceCulture);
             }
@@ -153,9 +369,9 @@ namespace ClaimsReserveCalculator.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to write products claims data..
         /// </summary>
-        public static string WriteProductsClaimsDataException {
+        internal static string WriteProductsClaimsDataError {
             get {
-                return ResourceManager.GetString("WriteProductsClaimsDataException", resourceCulture);
+                return ResourceManager.GetString("WriteProductsClaimsDataError", resourceCulture);
             }
         }
     }

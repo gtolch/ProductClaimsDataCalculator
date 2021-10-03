@@ -113,7 +113,7 @@ Below are some hints to help with this exercise.
 There are some dependencies on a few other packages, e.g. xUnit and Unity and Unity register-by-convention (DI).
 There are xUnit tests provided which can be run in Visual Studio, e.g. by using the xUnit Visual Studio test runner. 
 The application can be run from within the Visual Studio editor or by double clicking on the
-ClaimsReserveCalculator.exe file in Windows (File) Explorer after building the project in debug or release mode. 
+ClaimsReserveCalculator.exe file in Windows (File) Explorer, after building the project in debug or release mode. 
 
 The application depends on .NET Framework 4.7.2 and uses WPF to provide a very rudimentary GUI with two buttons 
 to load an input file ("Select Input File") and to convert the source data into a cumulative claims data file 
@@ -128,14 +128,17 @@ The output file format is auto-generated from the input file name and uses the s
 the characters '_out' just before the file extension (e.g. incremental_claims_data1_out.txt). 
 
 There is significant scope for refactoring and extending the classes and tests if more time was available.
-Tests would also be improved and test coverage extended.
+Data parsing and validation could be improved to cope with more edge cases, incomplete data or data with errors in it.  
+Tests would also be improved and test coverage extended. Integration and end-to-end tests should be added.
+Documentation should be improved e.g. methods should document all exceptions that can be thrown. 
+Configurable logging of exception messages should be added, eg using NLog. 
+It is assumed that this would ultimately be added hence why custom error messages are generated to be handled better later.
 The classes representing product claims data, for example could benefit from being refactored and broken up into smaller pieces.
 Also a number of collections and parameters could be abstracted and encapsulated into wrapper classes or structures.
 Also the data item separators (delimiters) could be stored separately from the parsers and the user should be able to select the preferred separator type.
-It would be easy to implement but was not considered a core aspect of the system.
 
 The application handles the parameters arriving in different orders of their category titles,
-assuming they are consistent with the position of the following data item fields. 
+assuming they are consistent with the position of the following data item fields and are separated by commas. 
 It is also assumed that the minimum valid year is 1500 during the data validation process and 
 the parsing may be aborted if an earlier value is seen for a data e.g. for origin year.  
 This was a conscious decision to have a small level of data validation.
@@ -147,5 +150,5 @@ The string names are assumed to be the ones indicated in the assignment descript
 and are not case sensitive. The data fields are assumed to map onto the same position as their title in the source file.
 So the order of the data is assumed to correspond to the order of the titles but that order can be in different arrangements
 (from one file to the next).  Values are assumed to be zero if they are not explicitly specified, 
-e.g. if a comma is followed by another comma, regardless of white space.
+e.g. if a comma is followed by another comma, regardless of white space. 
 

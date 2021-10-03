@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClaimsReserveCalculator.Properties;
+using System;
 using System.Collections.Generic;
 
 namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
@@ -10,11 +11,6 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
     public class ProductClaimsData
     {
         /// <summary>
-        /// The default minimum permitted origin or development year.
-        /// </summary>
-        private const int MIN_VALID_YEAR = 1800;
-
-        /// <summary>
         /// Incremental development years claims data - sorted according to origin year key.
         /// </summary>
         private readonly SortedList<int, DevelopmentYearClaimsData> _developmentYearsClaimsData;
@@ -25,8 +21,8 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         public int OriginYear { get; private set; }
 
         /// <summary>
-        /// Gets incremental development years claims data entries.
-        /// An empty collection may be returned if no development years have been set.
+        /// Incremental development years claims data entries.
+        /// An empty collection may be present if no development years have been set.
         /// </summary>
         public IEnumerable<DevelopmentYearClaimsData> DevelopmentYearsClaimsData => 
             _developmentYearsClaimsData.Values;
@@ -37,10 +33,9 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         /// <param name="originYear">The origin year associated with the claims data.</param>
         public ProductClaimsData(int originYear)
         {
-            if (originYear < MIN_VALID_YEAR)
+            if (!ClaimsDataValidator.IsClaimsYearValid(originYear))
             {
-                throw new ArgumentException(
-                    "Failed to create product claims data - origin year parameter is invalid.");
+                throw new ArgumentException(Resources.FailedToCreateProductClaimsData);
             }
 
             OriginYear = originYear;
@@ -48,10 +43,10 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         }
 
         /// <summary>
-        /// Calculates the cumulative value of the claims data, by adding the 
+        /// Calculates the cumulative value of all the claims data, by adding the 
         /// incremental values in the claims data for each of the development years.
         /// </summary>
-        /// <returns>Returns the cumulative claims amount - can be zero if no claims are found.</returns>
+        /// <returns>Returns cumulative claims amount - will be zero, if no claims data is present.</returns>
         public double CalculateCumulativeClaimsValue()
         {
             double cumulativeClaimsValue = 0;
@@ -67,7 +62,7 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         /// <summary>
         /// Update the recorded claims data for a development year.
         /// </summary>
-        /// <param name="developmentYearClaimsData">The claims data for a particular development year.</param>
+        /// <param name="claimsDataForYear">The claims data for a particular development year.</param>
         public void UpdateDevelopmentYearClaimsData(DevelopmentYearClaimsData claimsDataForYear)
         {
             if (_developmentYearsClaimsData.ContainsKey(claimsDataForYear.DevelopmentYear))
@@ -88,9 +83,9 @@ namespace ClaimsReserveCalculator.ClaimsDataDomainEntities
         /// <param name="endYear">The end of the permitted year range</param>
         public void AddMissingDevelopmentYearsData(int startYear, int endYear)
         {
-            if (startYear < MIN_VALID_YEAR || endYear < MIN_VALID_YEAR)
-            {
-                throw new ArgumentNullException("Can't add missing development year - parameters are invalid");
+            if (!ClaimsDataValidator.AreClaimsYearsValid(startYear, endYear))
+            { 
+                throw new ArgumentNullException(Resources.CannotAddMissingDevYear);
             }
 
             // prevent adding any development years before the origin year

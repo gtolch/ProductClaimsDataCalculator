@@ -1,5 +1,6 @@
 ﻿using ClaimsReserveCalculator.ClaimsDataParser;
 using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
+using ClaimsReserveCalculator.CustomExceptions;
 using System;
 using Xunit;
 
@@ -17,10 +18,19 @@ namespace ClaimsReserveTestProject
         }
 
         [Fact]
-        public void ParseClaimsDataCategoryInfo_InputDataStringWithNoSeparators_CategoryIndexPropertiesAreUnchanged()
+        public void ParseClaimsDataCategoryInfo_InputDataStringWithNoSeparators_ThrowsDataCategoryException()
         {
             ClaimsDataCategoryParser parser = new ClaimsDataCategoryParser();
             string inputData = "Origin YearDevelopment YearIncremental Value Product";
+
+            Assert.Throws<InvalidClaimsDataCategoriesException>( () => parser.ParseClaimsDataCategoryInfo(inputData));
+        }
+
+        [Fact]
+        public void ParseClaimsDataCategoryInfo_InputDataStringsContainSeparatorsButAreGarbled_DefaultCategoryIndexPositionPropertiesAreSet()
+        {
+            ClaimsDataCategoryParser parser = new ClaimsDataCategoryParser();
+            string inputData = "Origin, YearDevelopme,nt YearIncremental, Value Product";
 
             var categoryInfo = parser.ParseClaimsDataCategoryInfo(inputData);
 
@@ -30,13 +40,29 @@ namespace ClaimsReserveTestProject
             Assert.Equal(ClaimsDataCategoryInfo.DEFAULT_INCREMENTAL_VALUE_INDEX, categoryInfo.IncrementalValueIndex);
         }
 
-        [Fact]
-        public void ParseClaimsDataCategoryInfo_CommaSeparatedInputDataString_UpdatesCategoryIndexProperties()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ParseClaimsDataCategoryInfo_NullOrEmptyInputDataStrings_UpdatesCategoryIndexProperties(
+            string categoryInputDataToParse)
         {
             ClaimsDataCategoryParser parser = new ClaimsDataCategoryParser();
-            string inputData = "Origin Year, Development Year, Incremental Value, Product";
 
-            var categoryInfo = parser.ParseClaimsDataCategoryInfo(inputData);
+            Assert.Throws<ArgumentException>(
+                () => parser.ParseClaimsDataCategoryInfo(categoryInputDataToParse));
+        }
+
+        [Theory]
+        [InlineData("Origin Year,Development Year,Incremental Value,Product")]
+        [InlineData("Origin Year, Development Year, Incremental Value, Product")]
+        [InlineData("Origin Year,   Development Year, Incremental Value,    Product")]
+        [InlineData("ORIGIN Year,     Development YEAr,IncrEMENtal Value,product")]
+        public void ParseClaimsDataCategoryInfo_DifferentCommaSeparatedInputDataStrings_UpdatesCategoryIndexProperties(
+            string categoryInputDataToParse)
+        {
+            ClaimsDataCategoryParser parser = new ClaimsDataCategoryParser();
+
+            var categoryInfo = parser.ParseClaimsDataCategoryInfo(categoryInputDataToParse);
 
             Assert.Equal(0, categoryInfo.OriginYearIndex);
             Assert.Equal(1, categoryInfo.DevelopmentYearIndex);

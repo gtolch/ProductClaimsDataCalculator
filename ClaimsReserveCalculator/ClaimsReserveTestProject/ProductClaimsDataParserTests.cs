@@ -18,7 +18,7 @@ namespace ClaimsDataTestProject
                 mockDataCategoryParser.Object, mockIncrementalDataParser.Object);
             List<string> inputData = null;
 
-            Assert.Throws<ArgumentException>(() => dataParser.ParseProductsClaimsInputData(inputData));
+            Assert.Throws<ArgumentException>(() => dataParser.ParseProductsClaimsData(inputData));
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace ClaimsDataTestProject
                 mockDataCategoryParser.Object, mockIncrementalDataParser.Object);
             List<string> inputData = new List<string>();
 
-            Assert.Throws<ArgumentException>(() => dataParser.ParseProductsClaimsInputData(inputData));
+            Assert.Throws<ArgumentException>(() => dataParser.ParseProductsClaimsData(inputData));
         }
 
         [Theory]
@@ -43,7 +43,7 @@ namespace ClaimsDataTestProject
             var dataParser = new ProductsClaimsDataParser(mockCategoryParser.Object, mockIncrementalParser.Object);
             List<string> inputData = new List<string>() { inputLine1, inputLine2 };
 
-            var productsClaimsData = dataParser.ParseProductsClaimsInputData(inputData);
+            var productsClaimsData = dataParser.ParseProductsClaimsData(inputData);
 
             Assert.NotNull(productsClaimsData);
         }

@@ -1,6 +1,4 @@
 ﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace ClaimsReserveTestProject
@@ -12,7 +10,7 @@ namespace ClaimsReserveTestProject
         {
             ProductsClaimsData devYearClaimsData = new ProductsClaimsData();
 
-            Assert.Equal(ProductsClaimsData.ORIGIN_YEAR_NOT_SET, devYearClaimsData.EarliestOriginYear);
+            Assert.Equal(ClaimsDataConstants.YEAR_NOT_SET_VALUE, devYearClaimsData.EarliestOriginYear);
         }
 
         [Fact]
@@ -34,24 +32,18 @@ namespace ClaimsReserveTestProject
         }
 
         [Fact]
-        public void GetAllDevelopmentYearsClaimsData_ProductName_ReturnsDevelopmentYearsThatWereAdded()
+        public void EraseData_ExistingProductName_DeletesAllClaimsData()
         {
             ProductsClaimsData productsClaimsData = new ProductsClaimsData();
+            int originYear = 1990;
+            ProductClaimsData claimsData = new ProductClaimsData(originYear);
             string productName = "Comp1";
-            int originYear = 1995;
-            int developmentYear = 1997;
-            double incrementalValue = 12.4;
-            double cumulativeValue = 0;
-            ProductClaimsData productClaimsData = new ProductClaimsData(originYear);
-            productClaimsData.UpdateDevelopmentYearClaimsData(
-                new DevelopmentYearClaimsData(developmentYear, incrementalValue, cumulativeValue));
 
-            productsClaimsData.UpdateProductClaimsData(productName, productClaimsData);
-            var devYearsData = productsClaimsData.GetAllDevelopmentYearsClaimsData(productName);
+            productsClaimsData.UpdateProductClaimsData(productName, claimsData);
+            productsClaimsData.EraseData();
+            var claimsDataCollection = productsClaimsData.GetAllClaimsDataForProduct(productName);
 
-            Assert.Single(devYearsData);
+            Assert.Null(claimsDataCollection);
         }
-
-        
     }
 }

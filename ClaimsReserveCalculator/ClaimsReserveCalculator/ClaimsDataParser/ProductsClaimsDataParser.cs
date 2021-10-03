@@ -1,6 +1,6 @@
-﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
-using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
+﻿using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
 using ClaimsReserveCalculator.CustomExceptions;
+using ClaimsReserveCalculator.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
         /// <summary>
         /// The parser for decoding claims data categories.
         /// </summary>
-        IClaimsDataCategoryParser _claimsDataCategoryParser;
+        private readonly IClaimsDataCategoryParser _claimsDataCategoryParser;
 
         /// <summary>
         /// The parser for decoding incremental claims data.
@@ -31,8 +31,7 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
         {
             if (claimsDataCategoryParser == null || incrementalClaimsParser == null)
             {
-                throw new ArgumentNullException(
-                    "Failed to create product claims data parser - invalid parameters");
+                throw new ArgumentNullException(Resources.FailedToCreateProductClaimsParser);
             }
 
             _claimsDataCategoryParser = claimsDataCategoryParser;
@@ -40,14 +39,13 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
         }
 
         /// <summary>
-        /// Converts raw input data into a structured object representing 
-        /// the product claims data.
+        /// Converts raw input data into a collection of parsed product claims data.
         /// </summary>
         /// <param name="inputDataLines">the raw input data lines to be parsed.</param>
         /// <returns>the product claims data parsed from the input data.</returns>
-        public ProductsClaimsData ParseProductsClaimsInputData(IEnumerable<string> inputDataLines)
+        public IEnumerable<ParsedProductClaimsData> ParseProductsClaimsData(IEnumerable<string> inputDataLines)
         {
-            ProductsClaimsData productsClaimsData = new ProductsClaimsData();
+            IEnumerable<ParsedProductClaimsData> productsClaimsData = new List<ParsedProductClaimsData>();
 
             if (inputDataLines != null && inputDataLines.Count() > 0)
             {
@@ -60,21 +58,21 @@ namespace ClaimsReserveCalculator.ClaimsDataParser
                     {
                         var inputDataMainBody = inputDataLines.ToList();
 
+                        //remove header data
                         inputDataMainBody.RemoveRange(0, 1);
+
                         productsClaimsData = _incrementalClaimsDataParser.ParseIncrementalClaimsData(
-                            inputDataMainBody, productsClaimsData, claimsDataCategoryInfo);
+                            inputDataMainBody, claimsDataCategoryInfo);
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new ParseClaimsInputDataException(
-                        $"Error parsing claims reserve input data: {ex}", ex);
+                    throw new ParseClaimsInputDataException(Resources.ParseClaimsInputDataError, ex);
                 }
             }
             else
             {
-                throw new ArgumentException(
-                    "Cannot parse input data in data parser - input parameter is null or empty");
+                throw new ArgumentException(Resources.CannotParseInputAsParamIsNullOrEmpty);
             }
 
             return productsClaimsData;

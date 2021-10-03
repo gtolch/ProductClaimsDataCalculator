@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using ClaimsReserveCalculator.ClaimsDataDomainEntities;
+﻿using ClaimsReserveCalculator.ClaimsDataDomainEntities;
 using ClaimsReserveCalculator.ClaimsDataInputAndOutputInterfaces;
 using ClaimsReserveCalculator.ClaimsDataParserInterfaces;
+using ClaimsReserveCalculator.ClaimsDataProcessing;
 using ClaimsReserveCalculator.CustomExceptions;
 using ClaimsReserveCalculator.UseCaseInteractors;
 using Moq;
+using System.Collections.Generic;
 using Xunit;
 
 namespace ClaimsReserveTestProject
@@ -18,13 +18,16 @@ namespace ClaimsReserveTestProject
             var mockDataReader = new Mock<IProductsClaimsDataReader>();
             var mockDataWriter = new Mock<IProductsClaimsDataWriter>();
             var mockDataParser = new Mock<IProductsClaimsDataParser>();
+            var mockDataProcessor = new Mock<IClaimsDataManager>();
+            var mockDevYearSet = new Mock<IDevelopmentYearSet>();
             string sourceFilePath = "dfggfgddggdg.txt";
             string outputFilePath = "save1.txt";
             mockDataReader.Setup(
                 reader => reader.IsInputSourceValid(sourceFilePath)).Returns(false);
 
             ProcessClaimsDataUseCase productsClaimsDataUseCase = new ProcessClaimsDataUseCase(
-                mockDataReader.Object, mockDataWriter.Object, mockDataParser.Object);
+                mockDataReader.Object, mockDataWriter.Object, mockDataParser.Object, 
+                mockDataProcessor.Object, mockDevYearSet.Object);
 
             Assert.Throws<InvalidInputSourceFileException>(
                 () => productsClaimsDataUseCase.SaveCumulativeClaimsData(sourceFilePath, outputFilePath));
@@ -36,9 +39,12 @@ namespace ClaimsReserveTestProject
             var mockDataReader = new Mock<IProductsClaimsDataReader>();
             var mockDataWriter = new Mock<IProductsClaimsDataWriter>();
             var mockDataParser = new Mock<IProductsClaimsDataParser>();
-            var mockClaimsData = new Mock<ProductsClaimsData>();
+            var mockDataManager = new Mock<IClaimsDataManager>();
+            var mockDevYearSet = new Mock<IDevelopmentYearSet>();
+            IEnumerable<ParsedProductClaimsData> mockParsedProductClaimsData = new List<ParsedProductClaimsData>();
             ProcessClaimsDataUseCase productsClaimsDataUseCase = new ProcessClaimsDataUseCase(
-                mockDataReader.Object, mockDataWriter.Object, mockDataParser.Object);
+                mockDataReader.Object, mockDataWriter.Object, mockDataParser.Object, 
+                mockDataManager.Object, mockDevYearSet.Object);
             string sourceFilePath = "input1.txt";
             string outputFilePath = "save1.txt";
             string[] rawInputData = { "2000, 2001, 2002" };
@@ -47,13 +53,13 @@ namespace ClaimsReserveTestProject
             mockDataReader.Setup(
                 reader => reader.ReadRawInputData(sourceFilePath)).Returns(rawInputData); 
             mockDataParser.Setup(
-                parser => parser.ParseProductsClaimsInputData(
-                    rawInputData)).Returns(mockClaimsData.Object);
+                parser => parser.ParseProductsClaimsData(
+                    rawInputData)).Returns(mockParsedProductClaimsData);
 
             productsClaimsDataUseCase.SaveCumulativeClaimsData(sourceFilePath, outputFilePath);
 
             mockDataWriter.Verify(mock => mock.WriteProductClaimsOutputData(
-                It.IsAny<ProductsClaimsData>(), outputFilePath), Times.Once);
+                outputFilePath, It.IsAny<int>()), Times.Once);
         }
     }
 }
